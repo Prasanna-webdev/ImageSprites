@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Sprites Navigation</title>
+    <style>
+        /* Resetting some default styles for better aesthetics */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        /* Styling the Image Sprite Container */
+        .sprite-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            display: flex; /* Add display flex for proper alignment */
+        }
+
+        /* Style for the Sprite Image */
+        .sprite-image {
+            width: 300%; /* Triple the width to accommodate three images side by side */
+            transition: transform 0.3s ease-in-out; /* Add a smooth transition effect on transform */
+            display: flex; /* Add display flex for proper alignment */
+        }
+
+        /* Individual Image Style */
+        .sprite-image img {
+            flex: 1; /* Ensure equal distribution of space for each image */
+            width: 100%; /* Ensure images fill the container */
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        /* Navigation Arrows */
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            cursor: pointer;
+            color: #555;
+            background-color: #fff;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+        }
+
+        .arrow-left {
+            left: 10px;
+        }
+
+        .arrow-right {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sprite-container">
+    <div class="sprite-image">
+        <!-- Combine three images into a single sprite -->
+        <img src="https://picsum.photos/300/300" alt="Image 1">
+        <img src="https://picsum.photos/301/300" alt="Image 2">
+        <img src="https://picsum.photos/302/300" alt="Image 3">
+    </div>
+    <div class="arrow arrow-left" onclick="changeImage(-1)">←</div>
+    <div class="arrow arrow-right" onclick="changeImage(1)">→</div>
+</div>
+
+<script>
+    let currentImage = 1;
+
+    function changeImage(direction) {
+        currentImage += direction;
+        if (currentImage > 3) {
+            currentImage = 1;
+        } else if (currentImage < 1) {
+            currentImage = 3;
+        }
+
+        const spriteImage = document.querySelector('.sprite-image');
+        spriteImage.style.transform = `translateX(-${(currentImage - 1) * 100}%)`;
+    }
+
+    // Listen for arrow key events
+    window.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft') {
+            changeImage(-1);
+        } else if (e.key === 'ArrowRight') {
+            changeImage(1);
+        }
+    });
+</script>
+
+</body>
+</html>
